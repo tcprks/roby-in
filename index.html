@@ -8,59 +8,185 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" type="text/css">
-  <!-- remember, jQuery is completely optional -->
-  <!-- <script type='text/javascript' src='js/jquery-1.11.1.min.js'></script> -->
   <script type="text/javascript" src="js/jquery.particleground.js"></script>
   <script type="text/javascript" src="js/demo.js"></script>
-</head>
 
+  <style>
+    /* ── Floating CTA button ── */
+    #hire-btn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: #E83951;
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      font-size: 13px;
+      font-family: 'Syncopate', sans-serif;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 999;
+      border-radius: 2px;
+      box-shadow: 0 4px 20px rgba(232, 57, 81, 0.45);
+      transition: background 0.2s, transform 0.15s;
+    }
+    #hire-btn:hover { background: #c72d42; transform: translateY(-2px); }
+
+    /* ── Modal overlay ── */
+    #consult-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    #consult-overlay.open { display: flex; }
+
+    /* ── Modal card ── */
+    #consult-modal {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-top: 3px solid #E83951;
+      padding: 36px 32px 28px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      border-radius: 3px;
+      animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #consult-modal h4 {
+      color: #fff;
+      font-family: 'Syncopate', sans-serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+    }
+
+    #consult-modal input,
+    #consult-modal select,
+    #consult-modal textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #ddd;
+      padding: 9px 12px;
+      font-size: 13px;
+      margin-bottom: 10px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #consult-modal input:focus,
+    #consult-modal select:focus,
+    #consult-modal textarea:focus { border-color: #E83951; }
+
+    #consult-modal select option { background: #1a1a1a; }
+    #consult-modal textarea { height: 80px; resize: vertical; }
+
+    #consult-modal button[type="submit"] {
+      width: 100%;
+      padding: 11px;
+      background: #E83951;
+      color: #fff;
+      border: none;
+      font-family: 'Syncopate', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      margin-top: 4px;
+      transition: background 0.2s;
+    }
+    #consult-modal button[type="submit"]:hover { background: #c72d42; }
+
+    /* close × */
+    #close-modal {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      color: #666;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    #close-modal:hover { color: #E83951; }
+  </style>
+</head>
 <body>
 
 <div id="particles">
   <div id="intro">
-      <h2 style="font-family: 'Syncopate', sans-serif; font-weight: 10;">ROBY K.S&nbsp<a href="rks.pdf" style="color: white;"><img src="assets/resumeicon.png" height="35" width="35"></a></h2>
-        <hr style="width: 50%; background-color: #E83951; border-color: #E83951;">
-        <h3 style="color:white; margin-top:20px;">Request Security Consultation</h3>
+    <h2 style="font-family: 'Syncopate', sans-serif; font-weight: 10;">
+      ROBY K.S&nbsp;
+      <a href="rks.pdf" style="color: white;">
+        <img src="assets/resumeicon.png" height="35" width="35">
+      </a>
+    </h2>
+    <hr style="width: 50%; background-color: #E83951; border-color: #E83951;">
 
-<form action="https://formspree.io/f/mjgaryaa" method="POST" style="margin-top:10px;">
-
-<input type="text" name="name" placeholder="Your Name" required
-style="padding:8px; width:250px; margin:5px;"><br>
-
-<input type="email" name="email" placeholder="Email Address" required
-style="padding:8px; width:250px; margin:5px;"><br>
-
-<input type="text" name="company" placeholder="Company / Organization"
-style="padding:8px; width:250px; margin:5px;"><br>
-
-<select name="service" required
-style="padding:8px; width:266px; margin:5px;">
-<option value="">Select Service</option>
-<option>Network Security Assessment</option>
-<option>Firewall Architecture Design</option>
-<option>Zero Trust Consulting</option>
-<option>Small Office Security Setup</option>
-<option>General Security Consultation</option>
-</select><br>
-
-<textarea name="message" placeholder="Brief description of your requirement"
-style="padding:8px; width:250px; height:80px; margin:5px;"></textarea><br>
-
-<button type="submit"
-style="padding:10px 20px; background:#E83951; color:white; border:none; cursor:pointer;">
-Submit Request
-</button>
-
-</form>
     <a href="https://www.linkedin.com/in/robyks#/" style="color: white;"><i class="fab fa-linkedin" style="font-size: 2em;"></i></a>
-    &nbsp
+    &nbsp;
     <a href="https://twitter.com/Rchitect13/#/" style="color: white;"><i class="fab fa-twitter" style="font-size: 2em;"></i></a>
-    &nbsp
+    &nbsp;
     <a href="https://instagram.com/rchitect.in#/" style="color: white;"><i class="fab fa-instagram" style="font-size: 2em;"></i></a>
-    &nbsp
+    &nbsp;
     <a href="https://rchitect.in/posts/#/" style="color: white;"><i class="far fa-bookmark" style="font-size: 2em;"></i></a>
   </div>
 </div>
+
+<!-- Floating CTA -->
+<button id="hire-btn" onclick="document.getElementById('consult-overlay').classList.add('open')">
+  Hire Me
+</button>
+
+<!-- Modal -->
+<div id="consult-overlay" onclick="handleOverlayClick(event)">
+  <div id="consult-modal">
+    <button id="close-modal" onclick="document.getElementById('consult-overlay').classList.remove('open')">&times;</button>
+    <h4>Request Consultation</h4>
+    <form action="https://formspree.io/f/mjgaryaa" method="POST">
+      <input type="text"  name="name"    placeholder="Your Name"            required>
+      <input type="email" name="email"   placeholder="Email Address"        required>
+      <input type="text"  name="company" placeholder="Company / Organization">
+      <select name="service" required>
+        <option value="">Select Service</option>
+        <option>Network Security Assessment</option>
+        <option>Firewall Architecture Design</option>
+        <option>Zero Trust Consulting</option>
+        <option>Small Office Security Setup</option>
+        <option>General Security Consultation</option>
+      </select>
+      <textarea name="message" placeholder="Brief description of your requirement"></textarea>
+      <button type="submit">Submit Request</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('consult-overlay')) {
+      document.getElementById('consult-overlay').classList.remove('open');
+    }
+  }
+  // close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('consult-overlay').classList.remove('open');
+  });
+</script>
 
 </body>
 </html>
